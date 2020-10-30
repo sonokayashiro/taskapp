@@ -16,21 +16,21 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     @IBOutlet weak var searchBar: UISearchBar!
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        
-        
         //条件として検索文字がcategoryと一致するものを検索
         let result = realm.objects(Task.self).filter("category == %@", searchBar.text!)
 
         //検索結果の件数を取得
         let count = result.count
         print(count)
-        if count == 0{//検索結果が0の場合
-            taskArray = realm.objects(Task.self)//Task.selfはTask自身
-        } else {//検索結果がある場合
-            taskArray = result
+       
+        taskArray = result
+        tableView.reloadData()
+        
+        if searchBar.text == ""{
+            taskArray = realm.objects(Task.self)
             tableView.reloadData()
         }
-  
+        
     }
     
     @IBOutlet weak var tableView: UITableView!
